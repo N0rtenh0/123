@@ -1,0 +1,175 @@
+openapi: 3.0.0
+info:
+  title: Games
+  description: REST API
+  contact:
+    name: a041851
+    email: a041851@umaia.pt
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080
+    description: André's localhost
+    variables:
+      basePath:
+        default: /
+paths:
+  /games:
+    get:
+      tags:
+        - GamesController
+      summary: Buscar jogo
+      operationId: retrieveGame
+      responses:
+        "200":
+          description: Array de Jogos model
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Games'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Games'
+      x-swagger-router-controller: GamesController
+    post:
+      tags:
+        - GamesController
+      summary: Criar Jogos
+      operationId: createGame
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Games'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Games'
+      responses:
+        "200":
+          description: Criar um modelo Jogo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Games'
+      x-swagger-router-controller: GamesController
+
+  /games/{id}:
+    get:
+      tags:
+        - GamesController
+      summary: Buscar Jogos
+      operationId: retrieveGames
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Buscar jogo ID 1
+              value: 1
+            two:
+              summary: Buscar jogo ID 2
+              value: 2
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Games'
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+    put:
+      tags:
+        - GamesController
+      summary: Update jogos
+      operationId: updateGames
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Games'
+            example:
+              id: 1
+              name: DOOM 01
+              description: Developed by id software, the studio that pioneered the first-person shooter genre and created multiplayer Deathmatch, DOOM returns as a brutally fun and challenging modern-day shooter experience. Relentless demons, impossibly destructive guns, and fast, fluid movement provide the foundation for intense, first-person combat – whether you’re obliterating demon hordes through the depths of Hell in the single-player campaign, or competing against your friends in numerous multiplayer modes. Expand your gameplay experience using DOOM SnapMap game editor to easily create, play, and share your content with the world.
+              price: 20
+          # You can remove the 'examples' section
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Jogo PUT bem sucedido
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+    delete:
+      tags:
+        - GamesController
+      summary: Delete Jogos
+      operationId: deleteGames
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          examples:
+            one:
+              summary: Apagar jogo ID 1
+              value: 1
+            two:
+              summary: Apagar jogo ID 2
+              value: 2
+      responses:
+        "204":
+          description: No Content
+
+components:
+  schemas:
+    Games:
+      title: Jogos
+      required:
+        - id
+        - name
+        - description
+        - price
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: integer
+          format: int64
+      additionalProperties: false
+      example:
+        id: 0
+        name: Nome do jogo
+        description: Descrição do jogo
+        price: 0
