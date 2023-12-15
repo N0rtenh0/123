@@ -1,0 +1,369 @@
+openapi: 3.0.0
+info:
+  title: Games
+  description: REST API
+  contact:
+    name: grupo 05
+    email: WIP@umaia.pt
+  version: 0.0.1
+servers:
+- url: http://localhost:8080
+  description: André's localhost
+  variables:
+    basePath:
+      default: /
+paths:
+  /Users:
+    get:
+      tags:
+      - UserController
+      summary: Buscar user
+      operationId: retrieveUsers
+      responses:
+        "200":
+          description: Array de User model
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+                x-content-type: application/json
+      x-swagger-router-controller: UserController
+    post:
+      tags:
+      - UserController
+      summary: Criar Users
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Criar um modelo User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      x-swagger-router-controller: UserController
+  /Users/{id}:
+    get:
+      tags:
+      - UserController
+      summary: Buscar User
+      operationId: retrieveUserById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Buscar User ID 1
+            value: 1
+          two:
+            summary: Buscar User ID 2
+            value: 2
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: UserController
+    put:
+      tags:
+      - UserController
+      summary: Update do User
+      operationId: updateUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            examples:
+              JogoExamplo01:
+                $ref: '#/components/examples/UserExample01'
+              JogoExamplo02:
+                $ref: '#/components/examples/UserExample02'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: User PUT bem sucedido
+                x-content-type: application/json
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: UserController
+    delete:
+      tags:
+      - UserController
+      summary: Delete do User
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: No Content
+      x-swagger-router-controller: UserController
+  /Jogo:
+    get:
+      tags:
+      - JogoController
+      summary: Get Jogo
+      operationId: retrieveJogo
+      responses:
+        "200":
+          description: Array of Jogo model instances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Jogo'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                xml:
+                  name: Jogo
+                items:
+                  $ref: '#/components/schemas/Jogo'
+      x-swagger-router-controller: JogoController
+    post:
+      tags:
+      - JogoController
+      summary: Criar Jogo
+      operationId: createJogo
+      responses:
+        "200":
+          description: Array of Jogo model instances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Jogo'
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: array
+                xml:
+                  name: Jogo
+                items:
+                  $ref: '#/components/schemas/Jogo'
+      x-swagger-router-controller: JogoController
+  /Jogo/{id}:
+    get:
+      tags:
+      - JogoController
+      summary: Retrieve Jogo
+      operationId: retrieveJogoById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Retrieve Jogo id 1
+            value: 1
+          two:
+            summary: Retrieve Jogo id 2
+            value: 2
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Jogo'
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: JogoController
+    put:
+      tags:
+      - JogoController
+      summary: Update jogo
+      operationId: updateJogo
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Update Jogo id 1
+            value: 1
+          two:
+            summary: Update Jogo id 2
+            value: 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Jogo'
+            examples:
+              ClassExample01:
+                $ref: '#/components/examples/JogoExample01'
+              ClassExample02:
+                $ref: '#/components/examples/JogoExample02'
+        required: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Jogo PUT success
+                x-content-type: application/json
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
+      x-swagger-router-controller: JogoController
+    delete:
+      tags:
+      - JogoController
+      summary: Delete Jogo
+      operationId: deleteJogo
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 1
+          type: integer
+          format: int64
+        examples:
+          one:
+            summary: Delete Jogo id 1
+            value: 1
+          two:
+            summary: Delete Jogo id 2
+            value: 2
+      responses:
+        "204":
+          description: No Content
+      x-swagger-router-controller: JogoController
+components:
+  schemas:
+    User:
+      title: User
+      required:
+      - id
+      - name
+      - nick
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        nick:
+          type: string
+      additionalProperties: false
+      example:
+        id: 0
+        name: Nome do User
+        nick: Nick do user
+    Jogo:
+      title: jogo
+      required:
+      - descrição
+      - nome
+      - preço
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        descrição:
+          type: string
+        preço:
+          type: integer
+          format: int64
+      additionalProperties: false
+      example:
+        id: 0
+        nome: Nome do jogo
+        descrição: Descrição do jogo
+        preço: Preço do jogo
+  examples:
+    UserExample01:
+      value:
+        id: 1
+        name: Miguel
+        nick: N0rtenh0
+    UserExample02:
+      value:
+        id: 2
+        name: Tiago
+        nick: Hash
+    JogoExample01:
+      value:
+        id: 1
+        nome: Warframe
+        descrição: Descrição generica do jogo
+        preço: 0
+    JogoExample02:
+      value:
+        id: 2
+        nome: Doom64
+        descrição: Descrição generica do jogo
+        preço: 10
